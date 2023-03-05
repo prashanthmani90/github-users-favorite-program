@@ -15,9 +15,7 @@ exports.validate = (validations) => {
         if (errors.isEmpty()) {
             return next()
         }
-
-        res.status(process.env.VALIDATION_FAIL_CODE).json(
-            methods.failResponse("Validation failed", errors.array())
-        )
+        res.status(process.env.VALIDATION_FAIL_CODE)
+        res.render("error.pug", { message: errors?.errors[0]?.msg || "Validation Failed" })
     }
 }

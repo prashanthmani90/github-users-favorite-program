@@ -15,5 +15,5 @@ const errorLog = require("simple-node-logger").createSimpleLogger({
 module.exports = (error, req, res, next) => {
     errorLog.error(error.message)
     res.status(process.env.EXCEPTION_CODE)
-    res.render("error.pug", { errorMessage: error.message || "Internal server error" })
+    res.render("error.pug", { message: error.message || "Internal server error" })
 }

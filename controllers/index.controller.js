@@ -33,15 +33,21 @@ exports.indexPost = async (req, res) => {
 }
 
 exports.getFavoriteProgammingLanguage = async (req, res) => {
-    const { username } = req.body
     try {
+        const { username } = req.body
+        if (!username) {
+            // To handle API Limit Reached
+            return res.status(400).render("error.pug", {
+                message: `Username is required. Please enter a username to find the favorite program`
+            })
+        }
         const repos = await getPublicRepos(username)
         const languages = {}
 
         if (!repos.length) {
             // To handle API Limit Reached
             return res.status(400).render("error.pug", {
-                message: repos?.message || `User ${username} not found.`
+                message: repos?.message || `User ${username}'s may not exist in Gihub or Does not own any public repos.`
             })
         }
         repos.forEach((repo) => {

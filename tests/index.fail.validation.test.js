@@ -11,14 +11,10 @@ describe("Test the root post path with username fail validation", () => {
             })
             .expect(406)
             .then((response) => {
-                console.log(response)
-                expect(response.type).toBe("application/json")
-                expect(response.body.message).toBe("Validation failed")
-                //const root = parse(response.text)
-                //const message = root.querySelector("#error-message")?.textContent?.trim()
-                //expect(message).toBe("Validation failed")
-
-                // expect(response.body.message).toBe("Validation failed")
+                expect(response.type).toBe("text/html")
+                const root = parse(response.text)
+                const message = root.querySelector("#error-message")?.textContent?.trim()
+                expect(message).toBe("Invalid value")
             })
     })
 })
@@ -28,14 +24,16 @@ describe("Test the root post path with no username validation", () => {
         await supertest(app)
             .post("/getFavoriteLanguage")
             .send({
-                username: "" // username is required in validation...
+                username: "" // username should not be empty...
             })
-            .expect(400)
+            .expect(406)
             .then((response) => {
                 expect(response.type).toBe("text/html")
                 const root = parse(response.text)
                 const message = root.querySelector("#error-message")?.textContent?.trim()
-                expect(message).toBe("Not Found")
+                expect(message).toBe(
+                    "Username is required. Please enter a username to find the favorite program"
+                )
             })
     })
 })

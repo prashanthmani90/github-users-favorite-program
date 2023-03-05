@@ -23,7 +23,8 @@ const { parse } = require("node-html-parser")
 
 describe("getFavoriteProgammingLanguage", () => {
     it("returns the favorite programming language for a valid username", async () => {
-        const response = await supertest(app).post("/getFavoriteLanguage").send({ username: "prashanthmani90" })
+        const username = "prashanthmani90"
+        const response = await supertest(app).post("/getFavoriteLanguage").send({ username })
         expect(response.status).toBe(200)
         expect(response.type).toBe("text/html")
         const root = parse(response.text)
@@ -32,11 +33,12 @@ describe("getFavoriteProgammingLanguage", () => {
     })
 
     it("returns an error message for an invalid username", async () => {
-        const response = await supertest(app).post("/getFavoriteLanguage").send({ username: "invalidusername" })
+        const username = "invalidusername"
+        const response = await supertest(app).post("/getFavoriteLanguage").send({ username })
         expect(response.status).toBe(400)
         expect(response.type).toBe("text/html")
         const root = parse(response.text)
         const message = root.querySelector("#error-message")?.textContent.trim()
-        expect(message).toBe("User invalidusername not found.")
+        expect(message).toBe(`User ${username}'s may not exist in Gihub or Does not own any public repos.`)
     })
 })

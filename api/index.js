@@ -7,7 +7,7 @@ exports.getPublicRepos = async (username) => {
             hostname: "api.github.com",
             path: `/users/${username}/repos`,
             headers: {
-                Authorization: `Bearer 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`,
+                Authorization: `Bearer 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`,
                 "User-Agent": "node.js"
             }
         }
