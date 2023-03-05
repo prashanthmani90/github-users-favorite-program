@@ -1,0 +1,83 @@
+html
+  head
+    title Find Github User's Dominatin Programming Language
+    link(rel='stylesheet' href='./styles.css')
+    style.
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        margin: 0 auto;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        margin-top: 20%;
+        text-align: center;
+      }
+
+      label {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input, textarea {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+      }
+
+      input:focus, textarea:focus {
+        outline: none;
+        border-color: #5a5af5;
+      }
+
+      button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #5a5af5;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #4646e2;
+      }
+  body
+    h1 Github Form
+    form(method='POST', action='/getFavoriteLanguage', enctype='application/json')
+      label(for='username') Username:
+      input(type='text', name='username')
+      br
+      br
+      button(type='submit') Submit
+      br
+      br
+      br
+      div(id='result-container')
+    
+    script.
+      const form = document.querySelector('form');
+      form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const data = {
+          username: form.username.value
+        };
+        const response = await fetch('/getFavoriteLanguage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        const result = await response.text();
+        const container = document.getElementById('result-container');
+        container.innerHTML = result;
+      });
