@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`my Jade template renders correctly 1`] = `
-"<html><head><title>Find Github User's Dominatin Programming Language</title><link rel=\\"stylesheet\\" href=\\"./styles.css\\"/><style>form {
+exports[`HomePage should render an HTML form 1`] = `
+"<html lang=\\"en\\"><head><meta charset=\\"UTF-8\\"/><title>Find Github User's Dominatin Programming Language</title><style>form {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 500px;
   margin: 0 auto;
   font-size: 16px;
   font-family: Arial, sans-serif;
