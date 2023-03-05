@@ -1,5 +1,6 @@
+const https = require("https")
+const { getPublicRepos } = require("../api")
 
-const { default: axios } = require("axios")
 const { successResponse } = require("../helpers/methods")
 
 /**
@@ -32,14 +33,17 @@ exports.indexPost = async (req, res) => {
 }
 
 exports.getFavoriteProgammingLanguage = async (req, res) => {
-    console.log(req.body)
     const { username } = req.body
-    const reposUrl = `https://api.github.com/users/${username}/repos`
-    // https://api.github.com/users/samraj/repos
     try {
-        const { data: repos } = await axios.get(reposUrl)
+        const repos = await getPublicRepos(username)
         const languages = {}
 
+        if (!repos.length) {
+            // To handle API Limit Reached
+            return res.status(400).render("error.pug", {
+                message: repos?.message || `User ${username} not found.`
+            })
+        }
         repos.forEach((repo) => {
             const language = repo.language
 
@@ -62,21 +66,22 @@ exports.getFavoriteProgammingLanguage = async (req, res) => {
             }
         })
         if (!favoriteLanguage) {
-            res.render("result", {
+            return res.status(200).render("result.pug", {
                 message: `User ${username}'s does not have any favorite programming language or have not any language added to theri repos.`
             })
         }
-        res.render("result", {
+        res.status(200).render("result.pug", {
             message: `User ${username}'s favorite programming language is ${favoriteLanguage}.`
         })
     } catch (error) {
         console.log(error)
-        res.render("result", {
-            message: `User ${username} not found.`
+        res.status(500).render("error.pug", {
+            message: error.message || `User ${username} not found.`
         })
     }
 }
 
 exports.HomePage = async (req, res) => {
-    res.render("form")
+    res.status(200)
+    res.render("form.pug")
 }

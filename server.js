@@ -10,7 +10,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 console.log(`Node environment: ${process.env.NODE_ENV}`)
 
-app.set("view engine", "jade")
+app.set("view engine", "pug")
+app.set('views', './views');
+
 
 app.listen(port, () => {
     console.log(`Example app listening at port http://localhost:${port}`)
