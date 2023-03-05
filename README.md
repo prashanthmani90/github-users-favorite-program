@@ -34,7 +34,7 @@ To run the application as user facing
 
 npm start
 
-Please remember to add .env file with the share env variables
+Please remember to add .env file with the share env variables (Github access token is required. If getting bad credentials, Please request a new one or add your own personal access token from github). You can find it in user profile settings, under developer settings (Token - Classic giving repo permissions)
 
 # Test Cases
 
