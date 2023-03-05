@@ -34,6 +34,8 @@ To run the application as user facing
 
 npm start
 
+Please remember to add .env file with the share env variables
+
 # Test Cases
 
 ## View Homepage
